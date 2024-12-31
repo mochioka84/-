@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 class="mt-4">3F 在庫情報</h1>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>棚番</th>
+                <th>商品名</th>
+                <th>規格</th>
+                <th>在庫数</th>
+                <th>保管場所</th>
+                <th>賞味期限</th>
+                <th>備考</th>
+                <th>最終更新日</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.shelf_no }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.specification }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.storage_location }}</td>
+                <td>{{ product.expiration_date }}</td>
+                <td>{{ product.remarks }}</td>
+                <td>{{ product.last_updated.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>
+                    <a href="{{ url_for('edit_product', product_id=product.id) }}" class="btn btn-warning">編集</a>
+                    <a href="{{ url_for('delete_product', product_id=product.id) }}" class="btn btn-danger">削除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{{ url_for('add_product') }}" class="btn btn-primary">商品の追加</a>
+{% endblock %}

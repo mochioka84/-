@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>商品の編集</h2>
+<form method="POST">
+    <div class="form-group">
+        <label for="shelf_no">棚番:</label>
+        <input type="text" class="form-control" id="shelf_no" name="shelf_no" value="{{ product.shelf_no }}" required>
+    </div>
+    <div class="form-group">
+        <label for="name">商品名:</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ product.name }}" required>
+    </div>
+    <div class="form-group">
+        <label for="specification">規格:</label>
+        <input type="text" class="form-control" id="specification" name="specification" value="{{ product.specification }}" required>
+    </div>
+    <div class="form-group">
+        <label for="quantity">在庫数:</label>
+        <input type="text" class="form-control" id="quantity" name="quantity" value="{{ product.quantity }}" required>
+    </div>
+    <div class="form-group">
+        <label for="storage_location">保管場所:</label>
+        <input type="text" class="form-control" id="storage_location" name="storage_location" value="{{ product.storage_location }}" required>
+    </div>
+    <div class="form-group">
+        <label for="expiration_date">賞味期限:</label>
+        <select class="form-control" id="expiration_date" name="expiration_date" required>
+            <option value="不明" {% if product.expiration_date == '不明' %}selected{% endif %}>不明</option>
+            <option value="">選択してください</option>
+        </select>
+        <input type="date" class="form-control" id="expiration_date_input" name="expiration_date_input" {% if product.expiration_date != '不明' %}value="{{ product.expiration_date }}"{% else %}style="display:none;"{% endif %}>
+    </div>
+    <div class="form-group">
+        <label for="remarks">備考:</label>
+        <input type="text" class="form-control" id="remarks" name="remarks" value="{{ product.remarks }}">
+    </div>
+    <button type="submit" class="btn btn-primary">編集を確定</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">キャンセル</a>
+</form>
+<script>
+    document.getElementById('expiration_date').addEventListener('change', function() {
+        if (this.value === '不明') {
+            document.getElementById('expiration_date_input').style.display = 'none';
+        } else {
+            document.getElementById('expiration_date_input').style.display = 'block';
+        }
+    });
+</script>
+{% endblock %}
